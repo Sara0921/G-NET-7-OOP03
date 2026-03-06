@@ -132,9 +132,33 @@
             }
 
         }
+        //3
+        class Projector
+        {
+            public bool IsRunning { get; private set; }
+
+            public void Start()
+            {
+                IsRunning = true;
+                Console.WriteLine("Projector started.");
+            }
+            public void Stop()
+            {
+                IsRunning = false;
+                Console.WriteLine("Projector stopped.");
+            }
+
+        }
         class Cinema
         {
+            public string CinemaName { get; set; }
+            private Projector _projector = new Projector();
             private Ticket[] tickets = new Ticket[20];
+
+            public Cinema (string cinemaname)
+            {
+                CinemaName = cinemaname;
+            }
             public Ticket this[int index]
             {
                 get
@@ -169,6 +193,8 @@
                 }
 
             }
+
+            //3.a
             public bool AddTicket(Ticket t)
             {
                 for (int i = 0; i < tickets.Length; i++)
@@ -179,10 +205,36 @@
                         return true;
                     }
                 }
+                Console.WriteLine("Cinema is full.");
                 return false;
                 {
 
                 }
+            }
+            //3.b
+            public void PrintAllTickets()
+            {
+                Console.WriteLine($"\n=== {CinemaName} Tickets ===");
+                bool any = false;
+                foreach (Ticket t in tickets)
+                {
+                    if(t != null)
+                    { Console.WriteLine(t); any = true; }
+                    if (!any) Console.WriteLine("No tickets yet.");
+                }
+                    
+            }
+            
+            //3.c
+            public void OpenCinema()
+            {
+                Console.WriteLine($"{CinemaName} is opening...");
+                _projector.Start();
+            }
+            public void CloseCinema()
+            {
+                Console.WriteLine($"{CinemaName} is closing...");
+                _projector.Stop();
             }
         }
 
