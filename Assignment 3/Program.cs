@@ -2,6 +2,148 @@
 {
     internal class Program
     {
+        #region Part 02
+        enum TicketType
+        {
+            Standard,
+            VIP,
+            IMAX
+
+        }
+        struct Seat
+        {
+            public char Row;
+            public int Number;
+
+            public Seat(char row, int number)
+            {
+                Row = row;
+                Number = number;
+            }
+
+            public override string ToString() => $"{Row}{Number}";
+
+        }
+        //1
+        class Ticket
+
+        {
+            //1.a
+            public static int counter = 0;
+            public string MovieName { get; set; }
+            public int Ticketid { get; }
+
+
+            private decimal _price;
+
+            public decimal Price
+            {
+                get
+                {
+                    return _price;
+
+                }
+                set
+                {
+                    if (value > 0)
+                        _price = value;
+                }
+            }
+            //1.c
+            public decimal PriceAfterTax => _price + (_price * 14m / 100);
+
+            //1.b
+            public Ticket(string moviename, decimal price)
+            {
+                MovieName = moviename;
+                Price = price;
+                counter++;
+                Ticketid = counter;
+
+
+            }
+            //1.d
+            public override string ToString()
+                => $"[{Ticketid}] {MovieName} | Price : {Price:c} | Price After Tax : {PriceAfterTax:c}";
+            //1.e
+            public static int GetTotalTickets() => counter;
+
+        }
+        class Cinema
+        {
+            private Ticket[] tickets = new Ticket[20];
+            public Ticket this[int index]
+            {
+                get
+                {
+                    if (index < 0 || index >= tickets.Length)
+                        return null;
+                    return tickets[index];
+
+                }
+                set
+                {
+
+                    if (index < 0 || index >= tickets.Length)
+                        return;
+                    tickets[index] = value;
+
+
+                }
+
+            }
+            public Ticket this[string movieName]
+            {
+                get
+                {
+                    foreach (Ticket t in tickets)
+                    {
+                        if (t != null && t.MovieName == movieName)
+                            return t;
+
+                    }
+                    return null;
+                }
+
+            }
+            public bool AddTicket(Ticket t)
+            {
+                for (int i = 0; i < tickets.Length; i++)
+                {
+                    if (tickets[i] == null)
+                    {
+                        tickets[i] = t;
+                        return true;
+                    }
+                }
+                return false;
+                {
+
+                }
+            }
+        }
+
+        static class BookingHelper
+        {
+            private static int counter = 0;
+            public static double CalcGroupDiscount(int numberOfTickets, double pricePerTicket)
+            {
+                double total = numberOfTickets * pricePerTicket;
+                if (numberOfTickets > 5)
+                {
+                    return total - (total * 10.0 / 100);
+                }
+                return total;
+            }
+            public static string GenerateBookingReference()
+            {
+                counter++;
+                return $"BK-{counter}";
+            }
+
+
+        }
+        #endregion
         static void Main(string[] args)
         {
             #region Part 01
