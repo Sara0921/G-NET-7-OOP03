@@ -4,7 +4,15 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            #region Part 01
+            #region Question01
+            //a)Association>>Composition
+            //b)Association
+            //c)Inheritance
+            //d)Association>>Aggregation
+            //e)Dependency
+            #endregion
+            #endregion
         }
     }
 }
