@@ -69,6 +69,69 @@
             public static int GetTotalTickets() => counter;
 
         }
+        //2
+        //2.a
+        class StandardTicket : Ticket
+        {
+            public string SeatNumber { get; set; }
+
+            public StandardTicket (string moviename,decimal price,string seatnumber):base(moviename, price)
+            {
+                SeatNumber = seatnumber;
+            }
+
+            public override string ToString()
+            {
+                return base.ToString() + $"| Seat :{SeatNumber}";
+            }
+
+        }
+        //2.b
+        class VIPTicket : Ticket
+        {
+            public bool LoungeAccess { get; set; }
+            public decimal ServiceFee { get; } = 50;
+
+            public VIPTicket(string moviename , decimal price , bool loungeAccess): base(moviename, price)
+            {
+                loungeAccess = loungeAccess;
+            }
+            public override string ToString()
+            {
+                return base.ToString() + $"| Lounge : {LoungeAccess} | Service Fee : {ServiceFee}";
+                 
+            }
+        }
+        //2.c
+        class IMAXTicket : Ticket
+        {
+            private bool _is3D;
+
+            public bool Is3D
+            {
+                get { return _is3D; }
+                set
+                {
+                    if (value && !_is3D)
+                        Price += 30;
+                    if (!value && _is3D)
+                        Price -= 30;
+                    value = _is3D;
+
+                }
+            }
+            public IMAXTicket(string moviename , decimal price, bool is3D) : base(moviename, price)
+            {
+                if(is3D) Price += 30;
+                _is3D = is3D;
+            }
+
+            public override string ToString()
+            {
+                return base.ToString() + $"| 3D :{Is3D }" ;
+            }
+
+        }
         class Cinema
         {
             private Ticket[] tickets = new Ticket[20];
